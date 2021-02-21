@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<captain>测试content-type</captain>-->
+
+<!--1. 文件传送的content-type-->
+<!--<form action="/sub/" method="post" enctype="multipart/form-data">-->
+<!--&lt;!&ndash;    //enctype="multipart/form-data" 这个参数就是将本次请求的消息格式content-type的值改为multipart/form-data，&ndash;&gt;-->
+<!--&lt;!&ndash;    //那么本次http请求，会将文件数据片段发送。传送文件由于文件大，一般都是用片段发送&ndash;&gt;-->
+
+<!--    xx: <input type="text" name="xx">-->
+<!--    oo: <input type="text" name="oo">-->
+<!--    <input type="file">-->
+<!--    <input type="submit">-->
+<!--</form>-->
+
+<h2>sub页面</h2>
+<div>
+    a: <input type="text" name="a">
+    b: <input type="text" name="b">
+    <button id="sub">提交</button>
+    <p>
+        a + b = <span id="sum" style="color:blue;"></span>
+    </p>
+</div>
+
+</body>
+<script src="/static/jquery-3.5.1.min.js"></script>
+<script>
+
+    $('#sub').click (function (){
+        var a = $('[name="a"]').val();
+        var b = $('[name="b"]').val();
+
+<!--       1. 用GET方法传送数据 a, b -->
+<!--        $.ajax({-->
+<!--            url: '/sum/',-->
+<!--            type: 'get',-->
+<!--            data: {aa:a, bb:b},-->
+<!--            //  /sum/?aa=1&bb=2-->
+<!--            //也就是说，如果请求方法为get, 那么data属性中的键值对数据为加载路径/sum/后面，作为查询参数来显示携带请求数据-->
+<!--            success:function(res){-->
+<!--                alert(res)-->
+<!--            }-->
+<!--        })-->
+
+<!--       2. 用json方法传送数据 a, b-->
+
+        $.ajax({
+            url: '/sub/',
+            type: 'post',
+            headers: {
+                'Content-Type':'application/json',
+            },
+            data: JSON.stringify({aa:a, bb:b}),
+            success:function(res){
+                alert('ok')
+                document.getElementById('sum').innerHTML=res
+
+            }
+        })
+
+
+    })
+
+
+</script>
+
+
+
+</html>

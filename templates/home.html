@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <h1>这里是主页</h1>
+</head>
+<body>
+
+<h1>ajax list测试</h1>
+
+<ul>
+    //ajax中的函数会自动将hobby_list中的值添加到此ul标签
+</ul>
+
+
+<button id="btn">点我</button>
+</body>
+
+<script src="/static/jquery-3.5.1.min.js"></script>
+<script>
+    $('#btn').click (function (){
+
+        $.ajax({
+            url: '/data/',
+            type: 'get',
+            success: function(res){
+            //ajax接受响应数据时，会自动查看响应头，如果响应头里有个键值对是Content-Type: application/json, 那么自动将数据反序列化，再传递给函数的res参数。
+
+            //通过JsonResponse响应回来的额数据，ajax自动进行了反序列化，res得到的是反序列化后的数据
+<!--                console.log(res, typeof res);-->
+<!--                //{"name": "Tom", "hobby": ["football", "basketball", "music"]} string-->
+
+<!--                var res_dict = JSON.parse(res); //parse是对响应的HttpResponse的序列化数据进行反序列化-->
+<!--                console.log(res_dict, typeof res_dict);  //{name: "Tom", hobby: Array(3)} "object"-->
+
+<!--                var hobby  = res_dict['hobby'];-->
+<!--                var hobby = res_dict.hobby  //res_dict是对象，所以也可以用将hobby作为属性抓取，这种方式更常用-->
+<!--                console.log(hobby);   //["football", "basketball", "music"]-->
+
+<!--                var hobby = res['hobby']-->
+<!--                console.log(hobby);  //["football", "basketball", "music"]-->
+
+                //以下res接受的JsonResponse响应数据是hobby_list,即：["football", "basketball", "music"] "object"
+                //将数据放到li标签中，然后添加到ul标签中进行列表数据展示
+
+                console.log(res, typeof res);
+                //["football", "basketball", "music"] "object"
+
+                for (var i=0; i<res.length; i++) {
+                    var content = res[i];
+                    var liEle = document.createElement('li');
+                    liEle.innerText = content;
+                    $('ul').append(liEle);
+
+                }
+
+            }
+
+        })
+
+    })
+
+</script>
+
+</html>
